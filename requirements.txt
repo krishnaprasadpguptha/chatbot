@@ -1,2 +1,3 @@
 tensorflow==2.12.0
 scikit_learn
+colorama==0.4.3
