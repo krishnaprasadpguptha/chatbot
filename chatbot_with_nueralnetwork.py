@@ -9,6 +9,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from sklearn.preprocessing import LabelEncoder
 
 
+# import training data
 with open('response.json') as file:
     data = json.load(file)
     
@@ -17,7 +18,7 @@ training_labels = []
 labels = []
 responses = []
 
-
+# create a list of intents for training
 for intent in data['intents']:
     for pattern in intent['patterns']:
         training_sentences.append(pattern)
@@ -26,7 +27,7 @@ for intent in data['intents']:
     
     if intent['tag'] not in labels:
         labels.append(intent['tag'])
-        
+
 num_classes = len(labels)
 
 
@@ -48,6 +49,7 @@ word_index = tokenizer.word_index
 sequences = tokenizer.texts_to_sequences(training_sentences)
 padded_sequences = pad_sequences(sequences, truncating='post', maxlen=max_len)
 
+# create the model
 model = Sequential()
 model.add(Embedding(vocab_size, embedding_dim, input_length=max_len))
 model.add(GlobalAveragePooling1D())
